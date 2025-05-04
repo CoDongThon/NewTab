@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thẻ mới</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link
+        href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAsC8qAP+EAACzh1cAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAACAAAAAAAAACAAAAAAAAEiAAAAADAAAiAAAAAAMzAiAAAAAAAAMzAAAAAAAAAiMzMAAAAAAAADAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA"
+        rel="icon" type="image/x-icon">
+
+    <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js"
+        crossorigin="anonymous"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
+        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.esm.min.js"
+      }
+    }
+    </script>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -25,46 +43,55 @@
 
         <main>
             <div class="logo-area" aria-hidden="true">
-                 <img src="./new-google-logo-2015.png" alt="Logo">
+                <img src="./new-google-logo-2015.png" alt="Logo">
             </div>
 
             <div class="search-wrapper">
                 <div class="search-container">
                     <form id="search-form" action="https://www.google.com/search" method="get" target="_blank">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="search-input" name="q" placeholder="Tìm kiếm Google hoặc nhập địa chỉ web..." autocomplete="off" aria-label="Tìm kiếm hoặc nhập địa chỉ web">
+                        <input type="text" id="search-input" name="q"
+                            placeholder="Tìm kiếm Google hoặc nhập địa chỉ web..." autocomplete="off"
+                            aria-label="Tìm kiếm hoặc nhập địa chỉ web">
                         <div class="search-features">
-                            <button type="button" class="search-feature-btn voice-search" title="Tìm kiếm bằng giọng nói" aria-label="Tìm kiếm bằng giọng nói">
+                            <button type="button" class="search-feature-btn voice-search"
+                                title="Tìm kiếm bằng giọng nói" aria-label="Tìm kiếm bằng giọng nói">
                                 <i class="fas fa-microphone"></i>
                             </button>
-                             <button type="button" class="search-feature-btn image-search" title="Tìm kiếm bằng hình ảnh" aria-label="Tìm kiếm bằng hình ảnh">
+                            <button type="button" class="search-feature-btn image-search" title="Tìm kiếm bằng hình ảnh"
+                                aria-label="Tìm kiếm bằng hình ảnh">
                                 <i class="fas fa-camera"></i>
-                             </button>
+                            </button>
                         </div>
                     </form>
                 </div>
-                 <div id="search-suggestions" class="suggestions-container" role="listbox" aria-label="Gợi ý tìm kiếm"></div>
+                <div id="search-suggestions" class="suggestions-container" role="listbox" aria-label="Gợi ý tìm kiếm">
+                </div>
             </div>
 
             <nav class="quick-links" id="quick-links-container" aria-label="Liên kết nhanh và Bookmark">
-                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="link-item default-link" title="YouTube" data-default-id="youtube">
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="link-item default-link"
+                    title="YouTube" data-default-id="youtube">
                     <i class="fab fa-youtube"></i>
                     <span>YouTube</span>
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="link-item default-link" title="Facebook" data-default-id="facebook">
-                   <i class="fab fa-facebook-f"></i>
-                   <span>Facebook</span>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="link-item default-link"
+                    title="Facebook" data-default-id="facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
                 </a>
-                 <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer" class="link-item default-link" title="Gmail" data-default-id="gmail">
-                   <i class="fas fa-envelope"></i>
-                   <span>Gmail</span>
+                <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer"
+                    class="link-item default-link" title="Gmail" data-default-id="gmail">
+                    <i class="fas fa-envelope"></i>
+                    <span>Gmail</span>
                 </a>
-                 <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer" class="link-item default-link" title="ChatGPT" data-default-id="chatgpt">
-                   <i class="fas fa-robot"></i>
-                   <span>ChatGPT</span>
-                 </a>
+                <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer"
+                    class="link-item default-link" title="ChatGPT" data-default-id="chatgpt">
+                    <i class="fas fa-robot"></i>
+                    <span>ChatGPT</span>
+                </a>
 
-                 <button id="add-bookmark-grid-btn" class="link-item add-button" title="Thêm Bookmark">
+                <button id="add-bookmark-grid-btn" class="link-item add-button" title="Thêm Bookmark">
                     <i class="fas fa-plus"></i>
                     <span>Thêm</span>
                 </button>
@@ -76,11 +103,180 @@
         </footer>
     </div>
 
+    <!-- DK189.Assistant -->
+    <style>
+        dk189-assistant {
+            display: block;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 50vh;
+            z-index: 2147483647 !important;
 
-    <div id="add-bookmark-form-container" class="form-popup" role="dialog" aria-labelledby="form-title" aria-modal="true">
-         <form id="bookmark-form">
+            background-color: #0005;
+
+            transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+        }
+
+        dk189-assistant.disabled {
+            bottom: calc(-50vh + 2.5em);
+            background-color: #0000;
+        }
+
+        dk189-assistant.unloaded {
+            display: none;
+        }
+    </style>
+    <dk189-assistant class="unloaded disabled"></dk189-assistant>
+    <template id="dk189-assistant">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+        <style>
+            ::-webkit-scrollbar {
+                width: .5em;
+                background-color: #00000080;
+            }
+
+            ::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+                background-color: #00000080;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+                background-color: #ffffff40;
+            }
+
+            .container-fluid {
+                height: 50vh;
+                padding-bottom: calc(var(--bs-gutter-x) * .5);
+            }
+
+            .container-fluid>.row {
+                height: 100%;
+            }
+
+            .container-fluid>.row>div {
+                height: 100%;
+            }
+
+            .container-fluid>.row>div>.card {
+                height: 100%;
+            }
+
+            .container-fluid>.row>div>.card>.card-body {
+                height: calc(100% - 3.5em);
+            }
+
+            .container-fluid>.row>div>.card>.card-body>#chat-messages-container {
+                height: calc(100% - 2.2em);
+            }
+
+            #voice-ai-assistant-toggle:not(:checked) {
+                background-color: #ff000080;
+            }
+
+            #voice-toggle {
+                background-position: center;
+                background-size: contain;
+                height: 2em;
+                background-color: #0000;
+                filter: brightness(0) saturate(100%) invert(39%) sepia(66%) saturate(6142%) hue-rotate(350deg) brightness(97%) contrast(103%);
+                --bs-form-switch-bg: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iY3VycmVudENvbG9yIiBjbGFzcz0iYmkgYmktbWljLW11dGUtZmlsbCIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICA8cGF0aCBkPSJNMTMgOGMwIC41NjQtLjA5NCAxLjEwNy0uMjY2IDEuNjEzbC0uODE0LS44MTRBNCA0IDAgMCAwIDEyIDhWN2EuNS41IDAgMCAxIDEgMHptLTUgNGMuODE4IDAgMS41NzgtLjI0NSAyLjIxMi0uNjY3bC43MTguNzE5YTUgNSAwIDAgMS0yLjQzLjkyM1YxNWgzYS41LjUgMCAwIDEgMCAxaC03YS41LjUgMCAwIDEgMC0xaDN2LTIuMDI1QTUgNSAwIDAgMSAzIDhWN2EuNS41IDAgMCAxIDEgMHYxYTQgNCAwIDAgMCA0IDRtMy05djQuODc5TDUuMTU4IDIuMDM3QTMuMDAxIDMuMDAxIDAgMCAxIDExIDMiLz4KICA8cGF0aCBkPSJNOS40ODYgMTAuNjA3IDUgNi4xMlY4YTMgMyAwIDAgMCA0LjQ4NiAyLjYwN20tNy44NC05LjI1MyAxMiAxMiAuNzA4LS43MDgtMTItMTJ6Ii8+Cjwvc3ZnPg==);
+            }
+            
+            #voice-toggle:checked {
+                filter: brightness(0) saturate(100%) invert(39%) sepia(66%) saturate(6142%) hue-rotate(211deg) brightness(97%) contrast(103%);
+                --bs-form-switch-bg: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iY3VycmVudENvbG9yIiBjbGFzcz0iYmkgYmktbWljLWZpbGwiIHZpZXdCb3g9IjAgMCAxNiAxNiI+CiAgPHBhdGggZD0iTTUgM2EzIDMgMCAwIDEgNiAwdjVhMyAzIDAgMCAxLTYgMHoiLz4KICA8cGF0aCBkPSJNMy41IDYuNUEuNS41IDAgMCAxIDQgN3YxYTQgNCAwIDAgMCA4IDBWN2EuNS41IDAgMCAxIDEgMHYxYTUgNSAwIDAgMS00LjUgNC45NzVWMTVoM2EuNS41IDAgMCAxIDAgMWgtN2EuNS41IDAgMCAxIDAtMWgzdi0yLjAyNUE1IDUgMCAwIDEgMyA4VjdhLjUuNSAwIDAgMSAuNS0uNSIvPgo8L3N2Zz4=);
+            }
+        </style>
+
+        <!-- Chatbox -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <div class="card shadow-lg"
+                        style="background-color: #000000AA; border-radius: 10px; overflow-y: hidden; overflow-x: hidden;">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between">
+                            <div class="form-check form-switch">
+                                <input id="voice-ai-assistant-toggle" class="form-check-input" type="checkbox"
+                                    role="switch" />
+                                <label class="form-check-label" for="voice-ai-assistant-toggle">A.I.
+                                    Assistant</label>
+                            </div>
+                            <button id="settings-button" type="button" class="btn p-0 px-2">⚙</button>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="chat-messages-container"
+                                style="overflow-y: auto; overflow-x: hidden;background-color: #00000080;">
+                                <div id="chat-messages" class="row justify-content-start"
+                                    style="padding: 10px; border-radius: 5px;"></div>
+                            </div>
+                            <form id="chat-your-message-form">
+                                <div class="input-group">
+                                    <div class="form-check form-switch py-0">
+                                        <input id="voice-toggle" class="form-check-input" type="checkbox"
+                                            role="switch" />
+                                    </div>
+                                    <input type="text" id="chat-input" name="message" class="form-control"
+                                        placeholder="Nhập tin nhắn..." aria-label="Nhập tin nhắn">
+                                    <button class="btn btn-primary" type="submit">Gửi</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal fade" id="settings-modal" tabindex="-1" aria-labelledby="settings-modal-label"
+            aria-hidden="true" data-bs-theme="dark">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="settings-modal-label">Voice A.I. Assistant Settings</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="settings-input-model-name" class="form-label">Google AI Model:</label>
+                            <select id="settings-input-model-name" class="form-select" aria-label="Google AI Model"
+                                disabled>
+                                <option selected>gemini-2.0-flash</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="settings-input-api-key" class="form-label">Google AI Studio API Key:</label>
+                            <textarea class="form-control" id="settings-input-api-key" rows="2"
+                                aria-label="Google AI Studio API Key" placeholder="AISTUDIO-apikey..."
+                                required></textarea>
+                            <a href="https://aistudio.google.com/apikey" target="_blank">Bấm vào đây để lấy api-key</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="settings-save-button">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous"></script>
+        <script type="module" src="assistant.js"></script>
+    </template>
+    <!-- DK189.Assistant -->
+
+
+    <div id="add-bookmark-form-container" class="form-popup" role="dialog" aria-labelledby="form-title"
+        aria-modal="true">
+        <form id="bookmark-form">
             <h3 id="form-title">Thêm Bookmark</h3>
-            <label for="bookmark-name" class="sr-only">Tên</label>
+            <label for="bookmark-nam</div>e" class="sr-only">Tên</label>
             <input type="text" id="bookmark-name" placeholder="Tên" required autocomplete="off">
             <label for="bookmark-url" class="sr-only">URL</label>
             <input type="url" id="bookmark-url" placeholder="URL" required autocomplete="off">
@@ -93,5 +289,18 @@
     <div id="overlay"></div>
 
     <script src="./script.js"></script>
+    <script type="module">
+        ((root, template) => {
+            root.attachShadow({ mode: "open" })
+                .appendChild(template.content.cloneNode(true));
+            root.classList.remove("unloaded");
+            root.classList.add("loaded");
+            template.remove();
+        })(
+            document.querySelector("dk189-assistant"),
+            document.querySelector("template#dk189-assistant")
+        );
+    </script>
 </body>
+
 </html>

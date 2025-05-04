@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentDateString = `${dayName}, ${day} tháng ${month}, ${year}`;
             if (lastDateString !== currentDateString) { dateElement.textContent = currentDateString; lastDateString = currentDateString; }
             const currentYearString = year.toString();
-             if (yearElement && lastYearString !== currentYearString) { yearElement.textContent = currentYearString; lastYearString = currentYearString; }
+            if (yearElement && lastYearString !== currentYearString) { yearElement.textContent = currentYearString; lastYearString = currentYearString; }
         });
     }
     updateTimeAndDate(); setInterval(updateTimeAndDate, 1000);
@@ -72,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-     function fetchGoogleSuggestions(query) {
+    function fetchGoogleSuggestions(query) {
         if (suggestionRequestController) {
             suggestionRequestController.abort();
         }
         suggestionRequestController = new AbortController();
         const signal = suggestionRequestController.signal;
 
-        window.handleGoogleSuggests = function(data) {
+        window.handleGoogleSuggests = function (data) {
             if (signal.aborted) return;
             const suggestions = data[1];
             renderSuggestions(suggestions);
@@ -98,28 +98,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const script = document.createElement('script');
         script.id = 'jsonp-suggest';
-          script.src = `https://clients1.google.com/complete/search?client=firefox&hl=vi&output=toolbar&callback=handleGoogleSuggests&q=${encodeURIComponent(query)}`;
+        script.src = `https://clients1.google.com/complete/search?client=firefox&hl=vi&output=toolbar&callback=handleGoogleSuggests&q=${encodeURIComponent(query)}`;
 
         script.onerror = (error) => {
-             if (signal.aborted) return; 
-             console.error("JSONP request error:", error);
+            if (signal.aborted) return;
+            console.error("JSONP request error:", error);
             clearSuggestions();
             delete window.handleGoogleSuggests;
-             const scriptElement = document.getElementById('jsonp-suggest');
+            const scriptElement = document.getElementById('jsonp-suggest');
             if (scriptElement) {
                 scriptElement.remove();
             }
-             suggestionRequestController = null;
-         };
+            suggestionRequestController = null;
+        };
 
         signal.addEventListener('abort', () => {
-             console.log("Aborting JSONP request for:", query);
-             delete window.handleGoogleSuggests;
-             const scriptElement = document.getElementById('jsonp-suggest');
-             if (scriptElement) {
-                 scriptElement.remove();
-             }
-         });
+            console.log("Aborting JSONP request for:", query);
+            delete window.handleGoogleSuggests;
+            const scriptElement = document.getElementById('jsonp-suggest');
+            if (scriptElement) {
+                scriptElement.remove();
+            }
+        });
 
 
         document.body.appendChild(script);
@@ -225,36 +225,36 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('keydown', (e) => {
         const suggestionsList = searchSuggestionsContainer.querySelector('ul');
         if (suggestionsList && suggestionsList.children.length > 0) {
-             if (e.key === 'ArrowDown') {
-                 e.preventDefault();
-                 suggestionsList.children[0].focus();
-             }
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                suggestionsList.children[0].focus();
+            }
         }
         if (e.key === 'Escape') {
             clearSuggestions();
         }
     });
     searchSuggestionsContainer.addEventListener('keydown', (e) => {
-         const currentFocused = document.activeElement;
-         if (currentFocused && currentFocused.tagName === 'LI') {
-             if (e.key === 'ArrowDown') {
-                 e.preventDefault();
-                 const next = currentFocused.nextElementSibling;
-                 if (next) next.focus();
-             } else if (e.key === 'ArrowUp') {
-                 e.preventDefault();
-                 const prev = currentFocused.previousElementSibling;
-                 if (prev) prev.focus();
-                 else searchInput.focus();
-             } else if (e.key === 'Escape') {
-                 clearSuggestions();
-                 searchInput.focus();
-             }
-         }
-     });
+        const currentFocused = document.activeElement;
+        if (currentFocused && currentFocused.tagName === 'LI') {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const next = currentFocused.nextElementSibling;
+                if (next) next.focus();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prev = currentFocused.previousElementSibling;
+                if (prev) prev.focus();
+                else searchInput.focus();
+            } else if (e.key === 'Escape') {
+                clearSuggestions();
+                searchInput.focus();
+            }
+        }
+    });
 
 
-     if (voiceSearchBtn) {
+    if (voiceSearchBtn) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             const recognition = new SpeechRecognition(); recognition.continuous = false; recognition.lang = 'vi-VN'; recognition.interimResults = false; recognition.maxAlternatives = 1;
@@ -269,22 +269,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const transcript = event.results[0][0].transcript;
                 searchInput.value = transcript;
                 showSuggestions(transcript);
-             };
-            recognition.onerror = (event) => { console.error('Speech error:', event.error); if(event.error !== 'no-speech' && event.error !== 'aborted') alert(`Lỗi nhận dạng giọng nói: ${event.error}`); };
+            };
+            recognition.onerror = (event) => { console.error('Speech error:', event.error); if (event.error !== 'no-speech' && event.error !== 'aborted') alert(`Lỗi nhận dạng giọng nói: ${event.error}`); };
             recognition.onend = () => { isListening = false; voiceSearchBtn.classList.remove('listening'); voiceSearchBtn.title = "Tìm kiếm bằng giọng nói"; };
         } else { console.warn("Speech Recognition not supported."); voiceSearchBtn.title = "Trình duyệt không hỗ trợ"; voiceSearchBtn.disabled = true; voiceSearchBtn.style.opacity = 0.5; voiceSearchBtn.style.cursor = 'not-allowed'; }
     }
 
 
-     if (imageSearchBtn) { imageSearchBtn.addEventListener('click', () => { window.open('https://lens.google.com/', '_blank', 'noopener,noreferrer'); }); }
+    if (imageSearchBtn) { imageSearchBtn.addEventListener('click', () => { window.open('https://lens.google.com/', '_blank', 'noopener,noreferrer'); }); }
 
 
-     function getHiddenDefaults() {
+    function getHiddenDefaults() {
         try { const stored = localStorage.getItem(HIDDEN_DEFAULTS_KEY); return stored ? JSON.parse(stored) : []; } catch (e) { console.error("Error loading hidden defaults:", e); return []; }
-     }
-     function saveHiddenDefaults(hiddenIds) {
+    }
+    function saveHiddenDefaults(hiddenIds) {
         try { localStorage.setItem(HIDDEN_DEFAULTS_KEY, JSON.stringify(hiddenIds)); } catch (e) { console.error("Error saving hidden defaults:", e); }
-     }
+    }
 
     function createBookmarkElement(bookmark, index) {
         const linkItem = document.createElement('a'); linkItem.href = bookmark.url; linkItem.target = '_blank'; linkItem.rel = 'noopener noreferrer'; linkItem.classList.add('link-item', 'user-bookmark'); linkItem.title = `${bookmark.name}\n${bookmark.url}`; linkItem.dataset.index = index; // Index for user bookmarks
@@ -297,12 +297,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addDeleteButton(linkItemElement) {
-         const deleteBtn = document.createElement('button'); deleteBtn.className = 'delete-bookmark-btn'; deleteBtn.innerHTML = '<i class="fas fa-times" aria-hidden="true"></i>'; deleteBtn.title = 'Xóa'; deleteBtn.setAttribute('aria-label', `Xóa ${linkItemElement.querySelector('span')?.textContent || 'liên kết'}`);
-         if (linkItemElement.dataset.index !== undefined) { deleteBtn.dataset.index = linkItemElement.dataset.index; }
-         else if (linkItemElement.dataset.defaultId) { deleteBtn.dataset.defaultId = linkItemElement.dataset.defaultId; }
+        const deleteBtn = document.createElement('button'); deleteBtn.className = 'delete-bookmark-btn'; deleteBtn.innerHTML = '<i class="fas fa-times" aria-hidden="true"></i>'; deleteBtn.title = 'Xóa'; deleteBtn.setAttribute('aria-label', `Xóa ${linkItemElement.querySelector('span')?.textContent || 'liên kết'}`);
+        if (linkItemElement.dataset.index !== undefined) { deleteBtn.dataset.index = linkItemElement.dataset.index; }
+        else if (linkItemElement.dataset.defaultId) { deleteBtn.dataset.defaultId = linkItemElement.dataset.defaultId; }
 
-         deleteBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); handleDeleteClick(e.currentTarget); });
-         linkItemElement.appendChild(deleteBtn);
+        deleteBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); handleDeleteClick(e.currentTarget); });
+        linkItemElement.appendChild(deleteBtn);
     }
 
 
@@ -312,9 +312,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let userBookmarkCount = 0;
 
         userBookmarks.forEach((bookmark, index) => {
-             const elem = createBookmarkElement(bookmark, index);
-             elem.style.setProperty('--item-index', userBookmarkCount++);
-             fragment.appendChild(elem);
+            const elem = createBookmarkElement(bookmark, index);
+            elem.style.setProperty('--item-index', userBookmarkCount++);
+            fragment.appendChild(elem);
         });
         const existingUserBookmarks = quickLinksContainer.querySelectorAll('.user-bookmark');
         existingUserBookmarks.forEach(bm => bm.remove());
@@ -323,12 +323,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let defaultLinkCount = 0;
         const defaultLinks = quickLinksContainer.querySelectorAll('.default-link');
         defaultLinks.forEach((link, i) => {
-             const defaultId = link.dataset.defaultId;
-             const existingDeleteBtn = link.querySelector('.delete-bookmark-btn');
-             if(existingDeleteBtn) existingDeleteBtn.remove();
+            const defaultId = link.dataset.defaultId;
+            const existingDeleteBtn = link.querySelector('.delete-bookmark-btn');
+            if (existingDeleteBtn) existingDeleteBtn.remove();
 
             if (hiddenDefaults.includes(defaultId)) {
-                link.style.display = 'none'; 
+                link.style.display = 'none';
                 link.style.removeProperty('--item-index');
             } else {
                 link.style.display = '';
@@ -337,16 +337,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-         const totalVisibleItems = defaultLinkCount + userBookmarkCount;
-         if (addBookmarkGridBtn) {
-             addBookmarkGridBtn.style.setProperty('--item-index', totalVisibleItems);
-         }
+        const totalVisibleItems = defaultLinkCount + userBookmarkCount;
+        if (addBookmarkGridBtn) {
+            addBookmarkGridBtn.style.setProperty('--item-index', totalVisibleItems);
+        }
 
 
         const addButton = document.getElementById('add-bookmark-grid-btn');
-        if(addButton){
-             quickLinksContainer.insertBefore(fragment, addButton);
-             quickLinksContainer.appendChild(addButton);
+        if (addButton) {
+            quickLinksContainer.insertBefore(fragment, addButton);
+            quickLinksContainer.appendChild(addButton);
         } else { quickLinksContainer.appendChild(fragment); }
     }
 
@@ -384,23 +384,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } else if (userIndex !== undefined) {
                 const index = parseInt(userIndex, 10);
-                 if (!isNaN(index) && index >= 0 && index < userBookmarks.length) {
-                     userBookmarks.splice(index, 1);
-                     saveUserBookmarks();
-                     renderBookmarks();
-                 } else {
-                     console.error("Invalid user bookmark index:", userIndex);
-                     linkItem.remove();
-                 }
+                if (!isNaN(index) && index >= 0 && index < userBookmarks.length) {
+                    userBookmarks.splice(index, 1);
+                    saveUserBookmarks();
+                    renderBookmarks();
+                } else {
+                    console.error("Invalid user bookmark index:", userIndex);
+                    linkItem.remove();
+                }
             } else {
-                 console.error("Could not determine bookmark type for deletion.");
-                 linkItem.remove();
+                console.error("Could not determine bookmark type for deletion.");
+                linkItem.remove();
             }
         }
     }
 
 
-     let previouslyFocusedElement = null;
+    let previouslyFocusedElement = null;
 
     function showBookmarkForm() {
         previouslyFocusedElement = document.activeElement;
@@ -429,29 +429,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && bookmarkFormContainer.classList.contains('visible')) {
-             hideBookmarkForm();
+            hideBookmarkForm();
         }
     });
 
-     bookmarkFormContainer.addEventListener('keydown', (event) => {
-         if (event.key !== 'Tab') return;
+    bookmarkFormContainer.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') return;
 
-         const focusableElements = bookmarkFormContainer.querySelectorAll('input, button');
-         const firstElement = focusableElements[0];
-         const lastElement = focusableElements[focusableElements.length - 1];
+        const focusableElements = bookmarkFormContainer.querySelectorAll('input, button');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
 
-         if (event.shiftKey) {
-             if (document.activeElement === firstElement) {
-                 lastElement.focus();
-                 event.preventDefault();
-             }
-         } else {
-             if (document.activeElement === lastElement) {
-                 firstElement.focus();
-                 event.preventDefault();
-             }
-         }
-     });
+        if (event.shiftKey) {
+            if (document.activeElement === firstElement) {
+                lastElement.focus();
+                event.preventDefault();
+            }
+        } else {
+            if (document.activeElement === lastElement) {
+                firstElement.focus();
+                event.preventDefault();
+            }
+        }
+    });
 
     bookmarkForm.addEventListener('submit', (event) => {
         event.preventDefault();
