@@ -1,8 +1,8 @@
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const timeElement = document.getElementById('time');
     const dateElement = document.getElementById('date');
+    const lunarDateElement = document.getElementById('lunar-date');
     const searchInput = document.getElementById('search-input');
     const searchForm = document.getElementById('search-form');
     const searchSuggestionsContainer = document.getElementById('search-suggestions');
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let suggestionRequestController = null;
 
 
-    let lastTimeString = ''; let lastDateString = ''; let lastYearString = '';
+    let lastTimeString = ''; let lastDateString = ''; let lastLunarDateString = ''; let lastYearString = '';
     function updateTimeAndDate() {
         requestAnimationFrame(() => {
             const now = new Date();
@@ -37,6 +37,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const dayName = daysOfWeek[now.getDay()]; const day = now.getDate(); const month = now.getMonth() + 1; const year = now.getFullYear();
             const currentDateString = `${dayName}, ${day} tháng ${month}, ${year}`;
             if (lastDateString !== currentDateString) { dateElement.textContent = currentDateString; lastDateString = currentDateString; }
+            
+            // Add lunar date
+            if (typeof getLunarDate === 'function') {
+                const lunarDate = getLunarDate(day, month, year);
+                const canChi = getCanChi(lunarDate);
+                const dayOfMonth = lunarDate.day;
+                const monthOfYear = lunarDate.month;
+                const lunarYear = lunarDate.year;
+                let lunarMonthStr = monthOfYear + (lunarDate.leap === 1 ? ' (nhuận)' : '');
+                
+                const currentLunarDateString = `Ngày ${dayOfMonth} tháng ${lunarMonthStr} năm ${canChi[2]}`;
+                if (lastLunarDateString !== currentLunarDateString) { 
+                    lunarDateElement.textContent = currentLunarDateString; 
+                    lunarDateElement.title = `${canChi[0]}, tháng ${canChi[1]}, năm ${canChi[2]}`;
+                    lastLunarDateString = currentLunarDateString; 
+                }
+            }
+            
             const currentYearString = year.toString();
             if (yearElement && lastYearString !== currentYearString) { yearElement.textContent = currentYearString; lastYearString = currentYearString; }
         });

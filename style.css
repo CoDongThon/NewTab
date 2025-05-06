@@ -41,7 +41,16 @@ header {
 .logo-icon { color: #7e57c2; animation: pulseIcon 3s infinite ease-in-out; }
 .datetime { text-align: right; font-size: 0.9rem; color: #a0a0a0; }
 #time { display: block; font-size: 1.4rem; font-weight: 500; color: #e0e0e0; margin-bottom: 4px; text-rendering: optimizeLegibility; }
-
+#date { display: block; margin-bottom: 4px; }
+.lunar-date { 
+    display: block; 
+    font-size: 0.85rem; 
+    color: #a87ffb; 
+    font-style: italic;
+    margin-top: 2px;
+    opacity: 0.9;
+    text-shadow: 0 0 2px rgba(168, 127, 251, 0.3);
+}
 
 main {
     flex-grow: 1;

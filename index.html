@@ -114,6 +114,7 @@
             <div class="datetime">
                 <span id="time">--:--:--</span>
                 <span id="date">Đang tải...</span>
+                <span id="lunar-date" class="lunar-date">Đang tải âm lịch...</span>
             </div>
         </header>
 
@@ -670,6 +671,7 @@
     </button>
 
     <script src="./script.js"></script>
+    <script src="./amlich-hnd.js"></script>
     <script type="module">
         ((root, template) => {
             root.attachShadow({ mode: "open" })
