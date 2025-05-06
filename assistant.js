@@ -25,7 +25,12 @@ const google_gemini_conversation = [];
 /* defined */
 const root = document.querySelector("dk189-assistant");
 
-const voiceAiAssistantToggle = root.shadowRoot.querySelector("#voice-ai-assistant-toggle");
+let voiceAiAssistantToggle = null;
+try {
+    voiceAiAssistantToggle = root.shadowRoot.querySelector("#voice-ai-assistant-toggle");
+} catch (e) {
+    console.warn("voice-ai-assistant-toggle element not found");
+}
 
 const chatMessagesContainer = root.shadowRoot.querySelector("#chat-messages-container");
 const chatMessages = root.shadowRoot.querySelector("#chat-messages");
@@ -33,6 +38,14 @@ const chatYourMessageForm = root.shadowRoot.querySelector("#chat-your-message-fo
 
 const settingsButton = root.shadowRoot.querySelector("#settings-button");
 const settingsModal = root.shadowRoot.querySelector("#settings-modal");
+
+let voiceToggle = null; 
+try {
+    voiceToggle = root.shadowRoot.querySelector("#voice-toggle");
+} catch (e) {
+    console.warn("voice-toggle element not found");
+}
+
 
 /* modal handling */
 settingsButton.addEventListener("click", () => {
@@ -56,22 +69,103 @@ settingsModal.querySelector(`#settings-save-button`).addEventListener("click", (
 
     store.apiKey = settingsModal.querySelector("#settings-input-api-key").value;
 });
-/* modal handling */
 
 function voiceAiAssistantToggleHandled() {
-    // chatMessagesContainer.hidden = !voiceAiAssistantToggle.checked;
-    // chatYourMessageForm.hidden = !voiceAiAssistantToggle.checked;
-    if (voiceAiAssistantToggle.checked) {
+    if (voiceAiAssistantToggle && voiceAiAssistantToggle.checked) {
         root.classList.remove("disabled");
     } else {
         root.classList.add("disabled");
     }
 }
 
-voiceAiAssistantToggle.addEventListener("change", () => voiceAiAssistantToggleHandled());
-voiceAiAssistantToggleHandled();
+// Only add event listener if element exists
+if (voiceAiAssistantToggle) {
+    voiceAiAssistantToggle.addEventListener("change", () => voiceAiAssistantToggleHandled());
+    voiceAiAssistantToggleHandled();
+}
 
-speechSynthesis.getVoices(); // load voices
+// Speech recognition
+let recognition = null;
+let isListening = false;
+
+if ('webkitSpeechRecognition' in window && voiceToggle) {
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = 'vi-VN';
+    
+    voiceToggle.disabled = false;
+    voiceToggle.title = "Nhấn để sử dụng giọng nói";
+    
+    recognition.onstart = function() {
+        console.log('Speech recognition started');
+        if (voiceToggle) {
+            isListening = true;
+            voiceToggle.classList.add('listening');
+            voiceToggle.title = "Đang nghe...";
+        }
+    };
+    
+    recognition.onend = function() {
+        console.log('Speech recognition ended');
+        if (voiceToggle) {
+            isListening = false;
+            voiceToggle.classList.remove('listening');
+            voiceToggle.title = "Nhấn để sử dụng giọng nói";
+        }
+    };
+    
+    recognition.onresult = function(event) {
+        let interim_transcript = '';
+        let final_transcript = '';
+        
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+                final_transcript += event.results[i][0].transcript;
+            } else {
+                interim_transcript += event.results[i][0].transcript;
+            }
+        }
+        
+        if (final_transcript !== '') {
+            const chatInput = root.shadowRoot.querySelector("#chat-input");
+            chatInput.value = final_transcript;
+            console.log('Final transcript:', final_transcript);
+        }
+    };
+    
+    recognition.onerror = function(event) {
+        console.error('Speech recognition error', event.error);
+        if (voiceToggle) {
+            isListening = false;
+            voiceToggle.classList.remove('listening');
+            voiceToggle.title = "Nhấn để sử dụng giọng nói";
+        }
+    };
+} else {
+    console.warn('Speech recognition not supported in this browser or voice toggle not found');
+    if (voiceToggle) {
+        voiceToggle.disabled = true;
+        voiceToggle.title = "Tính năng không được hỗ trợ trên trình duyệt này";
+    }
+}
+
+// Voice toggle event handler
+if (voiceToggle) {
+    voiceToggle.addEventListener("click", function() {
+        if (!isListening) {
+            if (recognition) {
+                recognition.start();
+            }
+        } else {
+            if (recognition) {
+                recognition.stop();
+            }
+        }
+    });
+}
+
+speechSynthesis.getVoices();
 async function tts(text) {
     var voices = speechSynthesis.getVoices().filter(({ lang }) => lang == "vi-VN");
     if (voices.length == 0) {
@@ -82,7 +176,6 @@ async function tts(text) {
     utterance.lang = "vi-VN";
     utterance.voice = voices[0];
     utterance.rate = 1.1;
-    // utterance.pitch = 1;
     utterance.volume = 1;
     utterance.onend = function (event) {
         console.log("SpeechSynthesisUtterance.onend");
@@ -117,7 +210,7 @@ window.tts = tts;
 
 function msg$(element) {
     chatMessages.appendChild(element);
-    chatMessagesContainer.scrollTop = chatMessages.scrollHeight;
+    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
 }
 
 function msg$sys(msg, resp) {
@@ -150,14 +243,8 @@ function msg$sys(msg, resp) {
     catch (e) {
     }
     var element = html`
-        <div class="col-12 mb-2">
-            <div class="d-flex">
-                <div class="p-2 bg-light text-dark rounded"
-                    style="max-width: 80%; align-self: flex-start;">
-                    <strong>Trợ lý:</strong>
-                    <div pid="output"></div>
-                </div>
-            </div>
+        <div class="chat-message chat-message-bot">
+            <div class="chat-message-content" pid="output"></div>
             ${audioTxt ? `<audio autoplay control="false"/>` : `<!-- no-audio -->`}
         </div>
     `;
@@ -175,27 +262,22 @@ function msg$usr(msg) {
         parts: [{ text: msg }],
     });
     msg$(html`
-        <div class="col-12 mb-2">
-            <div class="d-flex justify-content-end">
-                <div class="p-2 bg-primary text-white rounded"
-                    style="max-width: 80%; align-self: flex-end;">
-                    <strong>Bạn:</strong> ${msg}
-                </div>
-            </div>
+        <div class="chat-message chat-message-user">
+            ${msg}
         </div>
     `);
 }
 
-msg$sys("Xin chào! Tôi có thể giúp gì cho bạn?");
 
-// msg$usr("Tôi muốn biết thời tiết hôm nay.");
-// msg$sys("Thời tiết hôm nay nắng đẹp, nhiệt độ khoảng 30°C.");
-// msg$usr("Cảm ơn bạn!");
-// msg$sys("Không có gì, rất vui được giúp bạn!");
-// msg$usr("Tôi muốn biết thời tiết hôm nay.");
-// msg$sys("Thời tiết hôm nay nắng đẹp, nhiệt độ khoảng 30°C.");
-// msg$usr("Cảm ơn bạn!");
-// msg$sys("Không có gì, rất vui được giúp bạn!");
+function showGreeting() {
+    if (chatMessages) {
+        if (chatMessages.children.length === 0) {
+            msg$sys("Xin chào! Tôi có thể giúp gì cho bạn?");
+        }
+    }
+}
+
+window.showAIChatGreeting = showGreeting;
 
 var thinking = false;
 
@@ -218,17 +300,45 @@ chatYourMessageForm.addEventListener("submit", async (event) => {
 
     if (message) {
         msg$usr(`${message}`.trim());
+        
+        // Add typing indicator
+        const typingIndicator = html`
+            <div class="chat-message chat-message-bot" id="typing-indicator">
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        `;
+        msg$(typingIndicator);
 
-        var ai = new GoogleGenAI({ apiKey: store.apiKey });
+        try {
+            var ai = new GoogleGenAI({ apiKey: store.apiKey });
 
-        let resp = await ai.models.generateContent({
-            model: store.model,
-            config: geminiConfig,
-            contents: google_gemini_conversation,
-        });
+            let resp = await ai.models.generateContent({
+                model: store.model,
+                config: geminiConfig,
+                contents: google_gemini_conversation,
+            });
 
-        console.log(resp);
-        msg$sys(resp.text, resp);
+            console.log(resp);
+            // Remove typing indicator
+            const indicator = root.shadowRoot.querySelector("#typing-indicator");
+            if (indicator) indicator.remove();
+            
+            msg$sys(resp.text, resp);
+        } catch (error) {
+            console.error("AI error:", error);
+            // Remove typing indicator
+            const indicator = root.shadowRoot.querySelector("#typing-indicator");
+            if (indicator) indicator.remove();
+            
+            msg$sys(JSON.stringify({
+                html: `<div class="alert alert-danger">Lỗi: ${error.message || "Không thể kết nối tới AI"}</div>`,
+                text: `Rất tiếc, đã xảy ra lỗi: ${error.message || "Không thể kết nối tới AI"}`
+            }));
+        }
     }
     thinking = false;
 });
