@@ -39,9 +39,9 @@ const geminiConfig = {
     // responseMimeType,
     // responseSchema,
     toolConfig: {
-        functionCallingConfig: {
-            mode: FunctionCallingConfigMode.ANY,
-        }
+        // functionCallingConfig: {
+        //     mode: FunctionCallingConfigMode.ANY,
+        // }
     },
     tools: [
         { googleSearch: {} },
