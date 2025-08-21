@@ -8,7 +8,7 @@ import { geminiConfig } from "./assistant.system.js";
 
 const store = {
     get model() {
-        return "gemini-2.5-flash-preview-04-17";
+        return "gemini-2.5-flash-preview";
     },
     set model(value) { },
 
